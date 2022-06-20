@@ -9,7 +9,7 @@ $scholen = $obj->getSchool();
 
 
 if(isset($_POST['submit'])){  
-    $fieldnames = ['voornaam', 'tussenvoegsel' , 'achternaam', 'scholen'];
+    $fieldnames = ['voornaam', 'achternaam', 'scholen'];
 
     $error = false;
 

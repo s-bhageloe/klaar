@@ -1,12 +1,12 @@
 <?php
 
-include_once 'database.php';
+include_once '../database.php';
 
 $obj = new database();
 
-$toernooien = $obj->getAanmelding($_GET['id']);
-$wijzig = $obj->getToernooiID($_GET['id']);
+$toernooien = $obj->getAlleAanmeldingen('id');
 
+print_r($toernooien);
 ?>
 
 <!DOCTYPE html>
@@ -27,34 +27,30 @@ $wijzig = $obj->getToernooiID($_GET['id']);
            <thead class="thead-dark">
                <tr>
                    <th scope="col">AanmeldingsID</th>
-                   <th scope="col">Speler</th>
-                   <th scope="col">School</th>
-                   <th scope="col">Toernooi</th>
-                   <th scope="col">Edit</th>
-                   <th scope="col">Delete</th>
+                   <th scope="col">Omschrijving</th>
+                   <th scope="col">Datum</th>
+                   <th scope="col">Aantal aanmeldingen</th>
+                   <th scope="col">Sluiten</th>
                </tr>
            </thead>
            <tbody></tbody>
                <?php foreach ($toernooien as $toernooi): ?>
                <tr>
                    <td><?php echo $toernooi['aanmeldingsID'];?></td>
-                   <td><?php echo $toernooi['voornaam']." ".$toernooi['tussenvoegsel']." ".$toernooi['achternaam'];?></td>
-                   <td><?php echo $toernooi['naam']?></td>
-                   <td><?php echo $toernooi['omschrijving']." ".$toernooi['datum'];?></td>
-                   <td class="Edit">
-                       <a class="btn btn-primary mr-2 btn-sm" href="./aanmelden/editAanmelding.php?id=<?php echo $toernooi['aanmeldingsID']; ?>">Edit</a>
-                   </td>      
-                   <td class="Delete">
-                       <a class="btn btn-danger mr-2 btn-sm" href="./aanmelden/deleteAanmelding.php?id=<?php echo $toernooi['aanmeldingsID']; ?>">Delete</a>
-                   </td> 
+                   <td><?php echo $toernooi['omschrijving'];?></td>
+                   <td><?php echo $toernooi['datum'];?></td>
+                   <td><?php echo $toernooi['aantal'];?></td>
+                   <td><?php if($toernooi["aantal"] % 2 == 0) :?> 
+                    <a class="btn btn-danger">Sluiten</a>
+                    <?php else:?>
+                        <p>Oneven/niet genoeg spelers</p>    
+                        <?php endif; ?>  </td>
+
                </tr>
 
                <?php endforeach; ?>               
-                    <td class="Create">
-                        <a class="btn btn-success mr-2 btn-sm rounded-pill" href="./aanmelden/createAanmelding.php?id=<?php echo $wijzig['toernooiID']; ?>">Create</a>
-                    </td>
                     <td class="index">
-                       <a class="btn btn-danger mr-2 btn-sm rounded-pill" href="index.php">Terug</a>
+                       <a class="btn btn-danger mr-2 btn-sm rounded-pill" href="../aanmelding.php">Terug</a>
                    </td>      
 
            </tbody>

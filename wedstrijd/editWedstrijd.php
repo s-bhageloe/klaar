@@ -11,10 +11,14 @@ $spelers = $obj->getSpelers();
 $toernooien = $obj->getToernooi();
 
 
+
+
 if(isset($_POST['submit'])){  
    $obj->editWedstrijd($_GET['id'], $_POST['toernooiID'], $_POST['ronde'], $_POST['speler1ID'], $_POST['speler2ID'], $_POST['score1'], $_POST['score2'], $_POST['winnaarsID']);
 
 }
+
+
 
 ?>
 <!DOCTYPE html>
@@ -38,8 +42,8 @@ if(isset($_POST['submit'])){
             <select name="speler1ID">
                 <option value="<?php echo $user[0]['speler1ID']; ?>"><?php echo $user[0]['speler1'];?></option>
                 <option>----</option>
-                <?php foreach ($spelers as $speler): ?>
-                    <option value="<?php echo $speler['speler1ID'];?>"><?php echo $speler['voornaam'];?></option>
+                <?php foreach ($spelers as $speler): echo print_r($speler); ?>
+                    <option value="<?php echo $speler['speler1ID'];?>"><?php echo $speler['voornaam']." ".$speler['tussenvoegsel']." ".$speler['achternaam'] ;?></option>
                 <?php endforeach; ?>              
             </select>   
         </div>
@@ -66,7 +70,7 @@ if(isset($_POST['submit'])){
         <div>
             <label>Toernooi</label>
             <select name="toernooiID">
-                <option value="<?php echo $user[0]['toernooiID']; ?>"></option>
+                <option value="<?php echo $user[0]['toernooiID']; ?>"><?php echo $user[0]['omschrijving']." ".$user[0]['datum'] ;?></option>
                 <option>----</option>
                 <?php foreach ($toernooien as $toernooi): ?>
                     <option value="<?php echo $toernooi['toernooiID'];?>"><?php echo $toernooi['omschrijving']. " ".$toernooi['datum'] ;?></option>

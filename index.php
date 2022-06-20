@@ -59,12 +59,7 @@ $users = $obj->getSpelers();
                    <td class="toernooi">
                        <a class="btn btn-primary mr-2 btn-sm rounded-pill" href="toernooi.php">Toernooi Gegevens</a>
                    </td>
-                   <td class="aanmelding">
-                       <a class="btn btn-primary mr-2 btn-sm rounded-pill" href="aanmelding.php">Aanmelden Toernooi</a>
-                   </td>
-                   <td class="wedstrijd">
-                       <a class="btn btn-primary mr-2 btn-sm rounded-pill" href="./wedstrijd/wedstrijd.php">Wedstrijd Gegevens</a>
-                   </td>        
+     
 
 
 

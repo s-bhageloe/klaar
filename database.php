@@ -301,15 +301,20 @@ class database{
 
 //alle wedstrijd functies
 
-    public function getWedstrijd(){
+    public function getWedstrijd($id){
         try {
-            $query = $this->dbh->query(
-                "SELECT wedstrijd.wedstrijdsID, toernooien.toernooiID, wedstrijd.ronde, sp1.voornaam AS speler1, sp2.voornaam as speler2, spwin.voornaam AS winnaar, wedstrijd.score1, wedstrijd.score2
+            $query = $this->dbh->prepare(
+                "SELECT *, sp1.voornaam AS speler1, sp2.voornaam as speler2, spwin.voornaam AS winnaar
                     FROM wedstrijd
                         INNER JOIN toernooien ON toernooien.toernooiID = wedstrijd.toernooiID
                         INNER JOIN spelers sp1 ON sp1.spelerID = wedstrijd.speler1ID 
                         INNER JOIN spelers sp2 ON sp2.spelerID = wedstrijd.speler2ID
-                        INNER JOIN spelers spwin ON spwin.spelerID =  wedstrijd.winnaarsID;");
+                        INNER JOIN spelers spwin ON spwin.spelerID =  wedstrijd.winnaarsID
+                        WHERE wedstrijd.toernooiID = :id;");
+
+                $query->execute([
+                    'id' => $id
+                ]);
 
             return $query->fetchAll();
         } catch (\PDOException $e) {
@@ -320,7 +325,7 @@ class database{
     public function getwedstrijdID($id){
         try {
             $query = $this->dbh->prepare(
-                "SELECT wedstrijd.wedstrijdsID, toernooien.toernooiID, wedstrijd.ronde, sp1.voornaam AS speler1, sp2.voornaam as speler2, spwin.voornaam AS winnaar, wedstrijd.score1, wedstrijd.score2
+                "SELECT *, sp1.voornaam AS speler1, sp2.voornaam as speler2, spwin.voornaam AS winnaar
                     FROM wedstrijd
                         INNER JOIN toernooien ON toernooien.toernooiID = wedstrijd.toernooiID
                         INNER JOIN spelers sp1 ON sp1.spelerID = wedstrijd.speler1ID 
@@ -355,7 +360,7 @@ class database{
                 'winnaar' => $winnaarsID
             ]);
 
-            header("Location: wedstrijd.php");
+            header("Location: ../toernooi.php");
 
         } catch (\PDOException $e) {
             throw $e;
@@ -381,10 +386,10 @@ class database{
         }
     }
 
-    public function editWedstrijd($wedstrijdsID, $toernooiID, $ronde, $speler1ID, $speler2ID, $score1, $score2, $winnaarsID ){
+    public function editWedstrijd($id, $toernooiID, $ronde, $speler1ID, $speler2ID, $score1, $score2, $winnaarsID ){
         try {
             $query = $this->dbh->prepare(
-                "UPDATE wedstrijd
+                "UPDATE wedstrijd  INNER JOIN spelers ON wedstrijd.winnaarsID = spelers.spelerID
                 SET
                 toernooiID = :toernooiID, 
                 ronde = :ronde, 
@@ -393,11 +398,12 @@ class database{
                 score1 = :score1, 
                 score2 = :score2, 
                 winnaarsID = :winnaarsID 
+               
                 WHERE wedstrijdsID = :wedstrijdsID;"
             ); 
                 
             $query->execute([
-                'wedstrijdsID' => $wedstrijdsID,
+                'wedstrijdsID' => $id,
                 'toernooiID' => $toernooiID,
                 'ronde' => $ronde,
                 'speler1ID' => $speler1ID,
@@ -418,13 +424,19 @@ class database{
 
 //alle aanmelding functies
 
-public function getAanmelding(){
+public function getAanmelding($id){
     try {
-        $query = $this->dbh->query(
-            "SELECT aanmelding.aanmeldingsID, spelers.spelerID, spelers.voornaam, spelers.tussenvoegsel, spelers.achternaam, toernooien.toernooiID, toernooien.omschrijving, toernooien.datum
+        $query = $this->dbh->prepare(
+            "SELECT *, aanmelding.aanmeldingsID, spelers.spelerID, spelers.voornaam, spelers.tussenvoegsel, spelers.achternaam, toernooien.toernooiID, toernooien.omschrijving, toernooien.datum
                 FROM aanmelding 
                     INNER JOIN spelers ON spelers.spelerID = aanmelding.spelerID 
-                    INNER JOIN toernooien ON toernooien.toernooiID = aanmelding.toernooiID;");
+                    INNER JOIN scholen ON spelers.schoolID = scholen.schoolID
+                    INNER JOIN toernooien ON toernooien.toernooiID = aanmelding.toernooiID
+                    WHERE aanmelding.toernooiID = :id;");
+
+                $query->execute([
+                    'id' => $id
+                ]);
 
         return $query->fetchAll();
     } catch (\PDOException $e) {
@@ -463,7 +475,7 @@ public function createAanmelding($spelerID, $toernooiID){
             'toernooiID' => $toernooiID
         ]);
 
-        header("Location: ../aanmelding.php");
+        header("Location: ../toernooi.php");
 
     } catch (\PDOException $e) {
         throw $e;
@@ -511,5 +523,67 @@ public function deleteAanmelding($id){
     }
 }
 
+public function getUitslag($id){
+    try {
+        $query = $this->dbh->prepare(
+            "SELECT *, sp1.voornaam AS speler1, sp2.voornaam as speler2, spwin.voornaam AS winnaar
+            FROM wedstrijd
+                INNER JOIN toernooien ON toernooien.toernooiID = wedstrijd.toernooiID
+                INNER JOIN spelers sp1 ON sp1.spelerID = wedstrijd.speler1ID 
+                INNER JOIN spelers sp2 ON sp2.spelerID = wedstrijd.speler2ID
+                INNER JOIN spelers spwin ON spwin.spelerID =  wedstrijd.winnaarsID
+                    WHERE wedstrijd.toernooiID = :id AND wedstrijd.ronde = 1;");
+
+        $query->execute([
+            'id' => $id
+        ]);
+
+        return $query->fetchAll();
+    } catch (\PDOException $e) {
+        throw $e;
+    }
+
 }
+
+public function getUitslagTwee($id){
+    try {
+        $query = $this->dbh->prepare(
+            "SELECT *, sp1.voornaam AS speler1, sp2.voornaam as speler2, spwin.voornaam AS winnaar
+            FROM wedstrijd
+                INNER JOIN toernooien ON toernooien.toernooiID = wedstrijd.toernooiID
+                INNER JOIN spelers sp1 ON sp1.spelerID = wedstrijd.speler1ID 
+                INNER JOIN spelers sp2 ON sp2.spelerID = wedstrijd.speler2ID
+                INNER JOIN spelers spwin ON spwin.spelerID =  wedstrijd.winnaarsID
+                    WHERE wedstrijd.toernooiID = :id AND wedstrijd.ronde = 2;");
+
+        $query->execute([
+            'id' => $id
+        ]);
+
+        return $query->fetchAll();
+    } catch (\PDOException $e) {
+        throw $e;
+    }
+
+}
+
+public function getAlleAanmeldingen($id){
+    try{
+    $query = $this->dbh->prepare( "SELECT *, count(*) AS aantal FROM aanmelding JOIN spelers ON aanmelding.spelerID = spelers.spelerID
+            JOIN toernooien ON aanmelding.toernooiID = toernooien.toernooiID GROUP BY aanmelding.toernooiID");
+
+$query->execute([
+    'id' => $id
+]);
+
+    return $query->fetchAll();
+    } catch (\PDOException $e) {
+        throw $e;
+    }
+}
+
+
+
+}
+
 

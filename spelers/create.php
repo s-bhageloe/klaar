@@ -5,7 +5,7 @@ $obj = new database();
 $scholen = $obj->getSchool();
 
 if(isset($_POST['submit'])){  
-    $fieldnames = ['voornaam', 'tussenvoegsel', 'achternaam', 'scholen'];
+    $fieldnames = ['voornaam', 'achternaam', 'scholen'];
 
     $error = false;
 
@@ -42,7 +42,7 @@ if(isset($_POST['submit'])){
             <input type="text" name="voornaam" required>
         </div>
         <div>
-            <label>Tussenvoegsel (als er geen tussenvoegsel is zet dan "-")</label>
+            <label>Tussenvoegsel</label>
             <input type="text" name="tussenvoegsel">
         </div>
         <div>

@@ -4,7 +4,8 @@ include_once '../database.php';
 
 $obj = new database();
 
-$users = $obj->getWedstrijd();
+$users = $obj->getWedstrijd($_GET['id']);
+$wijzig = $obj->getToernooiID($_GET['id']);
 
 
 ?>
@@ -29,6 +30,7 @@ $users = $obj->getWedstrijd();
                <tr>
                    <th scope="col">WedstrijdID</th>
                    <th scope="col">ToernooiID</th>
+                   <th scope="col">Toernooi</th>
                    <th scope="col">Wedstrijdronde</th>
                    <th scope="col">Sp1 voornaam</th>
                    <th scope="col">Sp2 voornaam</th>
@@ -42,6 +44,7 @@ $users = $obj->getWedstrijd();
                <tr>
                    <td><?php echo $user['wedstrijdsID'];?></td>
                    <td><?php echo $user['toernooiID'];?></td>
+                   <td><?php echo $user['omschrijving'];?></td>
                    <td><?php echo $user['ronde'];?></td>
                    <td><?php echo $user['speler1'];?></td>
                    <td><?php echo $user['speler2'];?></td>
@@ -57,8 +60,8 @@ $users = $obj->getWedstrijd();
                </tr>
                <?php endforeach; ?>        
                <td class="Create">
-                        <a class="btn btn-success mr-2 btn-sm rounded-pill" href="createWedstrijd.php?id">Create</a>
-                </td>
+                        <a class="btn btn-success mr-2 btn-sm rounded-pill" href="createWedstrijd.php?id=<?php echo $wijzig['toernooiID']; ?>">Create</a>
+                    </td>
                     <td class="index">
                        <a class="btn btn-danger mr-2 btn-sm rounded-pill" href="../index.php">Terug</a>
                    </td>
