@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 20, 2022 at 01:56 PM
--- Server version: 10.4.24-MariaDB
--- PHP Version: 8.1.6
+-- Gegenereerd op: 21 jun 2022 om 01:25
+-- Serverversie: 10.4.6-MariaDB
+-- PHP-versie: 7.3.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -24,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `aanmelding`
+-- Tabelstructuur voor tabel `aanmelding`
 --
 
 CREATE TABLE `aanmelding` (
@@ -33,10 +34,24 @@ CREATE TABLE `aanmelding` (
   `toernooiID` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Gegevens worden geëxporteerd voor tabel `aanmelding`
+--
+
+INSERT INTO `aanmelding` (`aanmeldingsID`, `spelerID`, `toernooiID`) VALUES
+(11, 2, 3),
+(12, 12, 3),
+(14, 12, 1),
+(15, 12, 1),
+(16, 1, 4),
+(17, 1, 1),
+(18, 1, 4),
+(19, 1, 3);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `scholen`
+-- Tabelstructuur voor tabel `scholen`
 --
 
 CREATE TABLE `scholen` (
@@ -45,7 +60,7 @@ CREATE TABLE `scholen` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `scholen`
+-- Gegevens worden geëxporteerd voor tabel `scholen`
 --
 
 INSERT INTO `scholen` (`schoolID`, `naam`) VALUES
@@ -64,7 +79,7 @@ INSERT INTO `scholen` (`schoolID`, `naam`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `spelers`
+-- Tabelstructuur voor tabel `spelers`
 --
 
 CREATE TABLE `spelers` (
@@ -76,31 +91,31 @@ CREATE TABLE `spelers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `spelers`
+-- Gegevens worden geëxporteerd voor tabel `spelers`
 --
 
 INSERT INTO `spelers` (`spelerID`, `voornaam`, `tussenvoegsel`, `achternaam`, `schoolID`) VALUES
-(1, 'Jasper', '-', 'Aalbers', 1),
-(2, 'Erik', '-', 'Aalten', 13),
-(12, 'Anne', '-', 'Aalten', 2),
+(1, 'Jasper', '', 'Aalbers', 1),
+(2, 'Erik', '', 'Aalten', 1),
+(12, 'Anne', '', 'Aalten', 1),
 (13, 'Remco', 'de', 'Abdi', 3),
 (14, 'Christiaan', 'te', 'Abdullah', 15),
-(15, 'Dineke', '-', 'Aben', 3),
-(16, 'Martijn', '-', 'Abrahamse', 1),
-(17, 'Sven', '-', 'Abrahamse', 1),
-(18, 'Bas', '-', 'Achterberg', 14),
+(15, 'Dineke', '', 'Aben', 1),
+(16, 'Martijn', '', 'Abrahamse', 1),
+(17, 'Sven', '', 'Abrahamse', 1),
+(18, 'Bas', '', 'Achterberg', 1),
 (19, 'Jeroen', 'de', 'Adams', 15),
 (20, 'Bert Jan', 'van', 'Adams', 15),
-(21, 'Jaap', '-', 'Adel', 17),
-(22, 'Gijs', '-', 'Adriaanse', 18),
-(23, 'Ferrie', '-', 'Aerts', 20),
-(24, 'Ahmad', '-', 'Afantrous', 19),
-(26, 'Huib', '-', 'Aggelen', 19);
+(21, 'Jaap', '', 'Adel', 1),
+(22, 'Gijs', '', 'Adriaanse', 1),
+(23, 'Ferrie', '', 'Aerts', 1),
+(24, 'Ahmad', '', 'Afantrous', 1),
+(26, 'Huib', '', 'Aggelen', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `toernooien`
+-- Tabelstructuur voor tabel `toernooien`
 --
 
 CREATE TABLE `toernooien` (
@@ -110,18 +125,18 @@ CREATE TABLE `toernooien` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `toernooien`
+-- Gegevens worden geëxporteerd voor tabel `toernooien`
 --
 
 INSERT INTO `toernooien` (`toernooiID`, `omschrijving`, `datum`) VALUES
-(1, 'Wintertoernooi', '2016-12-29'),
-(3, 'Voorjaarstoernooi', '2017-05-23'),
-(4, 'Zomerbal', '2017-07-31');
+(1, 'Wintertoernooi', '2023-10-29'),
+(3, 'Voorjaarstoernooi', '2022-10-09'),
+(4, 'Zomerbal', '2023-02-28');
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `wedstrijd`
+-- Tabelstructuur voor tabel `wedstrijd`
 --
 
 CREATE TABLE `wedstrijd` (
@@ -136,19 +151,28 @@ CREATE TABLE `wedstrijd` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Dumping data for table `wedstrijd`
+-- Gegevens worden geëxporteerd voor tabel `wedstrijd`
 --
 
 INSERT INTO `wedstrijd` (`wedstrijdsID`, `toernooiID`, `ronde`, `speler1ID`, `speler2ID`, `score1`, `score2`, `winnaarsID`) VALUES
-(5, 1, 2, 12, 14, 4, 5, 12),
-(6, 1, 2, 13, 12, 3, 1, 13);
+(5, 3, 2, 12, 14, 4, 5, 12),
+(6, 4, 4, 13, 12, 3, 1, 13),
+(7, 1, 2, 1, 2, 4, 5, 2),
+(8, 3, 1, 13, 14, 6, 1, 13),
+(9, 1, 1, 19, 23, 2, 1, 19),
+(10, 1, 1, 26, 24, 3, 4, 24),
+(11, 4, 4, 13, 13, 4, 5, 13),
+(12, 4, 4, 13, 13, 4, 5, 13),
+(13, 4, 4, 13, 13, 4, 5, 13),
+(14, 1, 6, 1, 1, 3, 3, 1),
+(15, 1, 9, 26, 24, 9, 8, 26);
 
 --
--- Indexes for dumped tables
+-- Indexen voor geëxporteerde tabellen
 --
 
 --
--- Indexes for table `aanmelding`
+-- Indexen voor tabel `aanmelding`
 --
 ALTER TABLE `aanmelding`
   ADD PRIMARY KEY (`aanmeldingsID`),
@@ -156,26 +180,26 @@ ALTER TABLE `aanmelding`
   ADD KEY `toernooiID` (`toernooiID`);
 
 --
--- Indexes for table `scholen`
+-- Indexen voor tabel `scholen`
 --
 ALTER TABLE `scholen`
   ADD PRIMARY KEY (`schoolID`);
 
 --
--- Indexes for table `spelers`
+-- Indexen voor tabel `spelers`
 --
 ALTER TABLE `spelers`
   ADD PRIMARY KEY (`spelerID`),
   ADD KEY `schoolID` (`schoolID`);
 
 --
--- Indexes for table `toernooien`
+-- Indexen voor tabel `toernooien`
 --
 ALTER TABLE `toernooien`
   ADD PRIMARY KEY (`toernooiID`);
 
 --
--- Indexes for table `wedstrijd`
+-- Indexen voor tabel `wedstrijd`
 --
 ALTER TABLE `wedstrijd`
   ADD PRIMARY KEY (`wedstrijdsID`),
@@ -185,64 +209,64 @@ ALTER TABLE `wedstrijd`
   ADD KEY `winnaarsID` (`winnaarsID`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT voor geëxporteerde tabellen
 --
 
 --
--- AUTO_INCREMENT for table `aanmelding`
+-- AUTO_INCREMENT voor een tabel `aanmelding`
 --
 ALTER TABLE `aanmelding`
-  MODIFY `aanmeldingsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `aanmeldingsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
--- AUTO_INCREMENT for table `scholen`
+-- AUTO_INCREMENT voor een tabel `scholen`
 --
 ALTER TABLE `scholen`
   MODIFY `schoolID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT for table `spelers`
+-- AUTO_INCREMENT voor een tabel `spelers`
 --
 ALTER TABLE `spelers`
-  MODIFY `spelerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `spelerID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
--- AUTO_INCREMENT for table `toernooien`
+-- AUTO_INCREMENT voor een tabel `toernooien`
 --
 ALTER TABLE `toernooien`
   MODIFY `toernooiID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `wedstrijd`
+-- AUTO_INCREMENT voor een tabel `wedstrijd`
 --
 ALTER TABLE `wedstrijd`
-  MODIFY `wedstrijdsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `wedstrijdsID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
--- Constraints for dumped tables
+-- Beperkingen voor geëxporteerde tabellen
 --
 
 --
--- Constraints for table `aanmelding`
+-- Beperkingen voor tabel `aanmelding`
 --
 ALTER TABLE `aanmelding`
   ADD CONSTRAINT `aanmelding_ibfk_1` FOREIGN KEY (`spelerID`) REFERENCES `spelers` (`spelerID`),
   ADD CONSTRAINT `aanmelding_ibfk_2` FOREIGN KEY (`toernooiID`) REFERENCES `toernooien` (`toernooiID`);
 
 --
--- Constraints for table `spelers`
+-- Beperkingen voor tabel `spelers`
 --
 ALTER TABLE `spelers`
   ADD CONSTRAINT `spelers_ibfk_1` FOREIGN KEY (`schoolID`) REFERENCES `scholen` (`schoolID`);
 
 --
--- Constraints for table `wedstrijd`
+-- Beperkingen voor tabel `wedstrijd`
 --
 ALTER TABLE `wedstrijd`
-  ADD CONSTRAINT `wedstrijd_ibfk_1` FOREIGN KEY (`toernooiID`) REFERENCES `toernooien` (`toernooiID`),
-  ADD CONSTRAINT `wedstrijd_ibfk_2` FOREIGN KEY (`speler1ID`) REFERENCES `spelers` (`spelerID`),
-  ADD CONSTRAINT `wedstrijd_ibfk_3` FOREIGN KEY (`speler2ID`) REFERENCES `spelers` (`spelerID`),
-  ADD CONSTRAINT `wedstrijd_ibfk_4` FOREIGN KEY (`winnaarsID`) REFERENCES `spelers` (`spelerID`);
+  ADD CONSTRAINT `wedstrijd_ibfk_1` FOREIGN KEY (`toernooiID`) REFERENCES `toernooien` (`toernooiID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `wedstrijd_ibfk_2` FOREIGN KEY (`speler1ID`) REFERENCES `spelers` (`spelerID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `wedstrijd_ibfk_3` FOREIGN KEY (`speler2ID`) REFERENCES `spelers` (`spelerID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `wedstrijd_ibfk_4` FOREIGN KEY (`winnaarsID`) REFERENCES `spelers` (`spelerID`) ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -14,6 +14,7 @@ $toernooien = $obj->getToernooi();
 
 
 if(isset($_POST['submit'])){  
+    print_r($spelers);
    $obj->editWedstrijd($_GET['id'], $_POST['toernooiID'], $_POST['ronde'], $_POST['speler1ID'], $_POST['speler2ID'], $_POST['score1'], $_POST['score2'], $_POST['winnaarsID']);
 
 }
